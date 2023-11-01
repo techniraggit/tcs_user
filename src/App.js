@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import Video from "twilio-video";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
 import { faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons";
 import { faVideo } from "@fortawesome/free-solid-svg-icons";
 import { faVideoSlash } from "@fortawesome/free-solid-svg-icons";
 import { faPhoneSlash } from "@fortawesome/free-solid-svg-icons";
-import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
+// import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
 const App = () => {
   const styles = {
@@ -22,8 +22,7 @@ const App = () => {
   console.log('room name', params);
   console.log('url',  "https://teleconsultation.niraginfotech.info/doctor/create_video_room?room_name=" +
   params);
-  const { user_type } = jwtDecode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4NTQwMzE1LCJpYXQiOjE2OTg0NTM5MTUsImp0aSI6IjYyNTVkOGU3NzA5ZjQxZTlhZDBjMDk2YWFhYzNjZTRjIiwidXNlcl9pZCI6MX0.whJFtOQeOCJoVL_mKXZAT-F4aZuglYj-TVNALAG4y7c");
-  const [notepad, setNotepad] = useState("");
+  // const [notepad, setNotepad] = useState("");
   const [globalRoom, setGlobalRoom] = useState();
   const [muted, setMuted] = useState(false);
   const [quitVideo, setQuitVideo] = useState(false);
@@ -60,24 +59,25 @@ const App = () => {
     event.preventDefault();
     // hide the join form
     document.getElementById("room-name-form").style.display = "flex";
-    if (user_type === "doctor") {
-      document.getElementById("noteSection").style.display = "block";
-    }
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4NTQwMzE1LCJpYXQiOjE2OTg0NTM5MTUsImp0aSI6IjYyNTVkOGU3NzA5ZjQxZTlhZDBjMDk2YWFhYzNjZTRjIiwidXNlcl9pZCI6MX0.whJFtOQeOCJoVL_mKXZAT-F4aZuglYj-TVNALAG4y7c");
     
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-    const responsePromise =await fetch("https://teleconsultation.niraginfotech.info/doctor/create_video_room?room_name=" +
-    params, requestOptions);
-    const response = await responsePromise.text();
-    console.log('response', JSON.parse(response));
-    const { token, room_name } = JSON.parse(response);
+    // var myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
+    // myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4NTQwMzE1LCJpYXQiOjE2OTg0NTM5MTUsImp0aSI6IjYyNTVkOGU3NzA5ZjQxZTlhZDBjMDk2YWFhYzNjZTRjIiwidXNlcl9pZCI6MX0.whJFtOQeOCJoVL_mKXZAT-F4aZuglYj-TVNALAG4y7c");
+    
+    // var requestOptions = {
+    //   method: "GET",
+    //   headers: myHeaders,
+    //   redirect: "follow",
+    // };
+    // const responsePromise =await fetch("https://teleconsultation.niraginfotech.info/doctor/create_video_room?room_name=" +
+    // params, requestOptions);
+    // const response = await responsePromise.text();
+    // console.log('response', JSON.parse(response));
+    // const { token, room_name } = JSON.parse(response);
     // join the video room with the token
+    try {
+    const token = 'eyJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIiwidHlwIjoiSldUIn0.eyJqdGkiOiJTS2Q0YTUzZjg5MTE0ZWVlOWU4ZWJkZDI2MjAwZDAyYmRlLTE2OTg4NTMxMjQiLCJncmFudHMiOnsidmlkZW8iOnsicm9vbSI6IjgzZTI2MjIwMDc4ZCJ9LCJpZGVudGl0eSI6IjM2NzU5OTc1LTQwMjItNGI0MS1hOTk2LWRiNTVlMjllNWUwYyJ9LCJpc3MiOiJTS2Q0YTUzZjg5MTE0ZWVlOWU4ZWJkZDI2MjAwZDAyYmRlIiwiZXhwIjoxNjk5NTQ0MzI0LCJuYmYiOjE2OTg4NTM1MDAsInN1YiI6IkFDOWMwMGI1NjIzMjA2NzQyMDdmN2FmZWQ4NGQ5YzNkN2IifQ.9NMmHFnrJcfpMjzw_W5VH4bJiZl-_PoMOJwhapOep1U';
+    const room_name = '83e26220078d';
     const room = await joinVideoRoom(room_name, token);
     setGlobalRoom(room);
     handleConnectedParticipant(room.localParticipant);
@@ -88,6 +88,9 @@ const App = () => {
     room.on("participantDisconnected", handleDisconnectedParticipant);
     window.addEventListener("pagehide", () => room.disconnect());
     window.addEventListener("beforeunload", () => room.disconnect());
+    } catch(e) {
+      console.log(e);
+    }
   };
 
   const handleConnectedParticipant = (participant) => {
@@ -158,23 +161,9 @@ const App = () => {
       <div className="videoSection">
         <div id="video-container" className="video-outer" style={styles.video}></div>
 
-        {user_type === "doctor" ? (
-          <div id="noteSection" style={{ display: "none" }}>
-            <ReactQuill
-              style={{ width: "100%" }}
-              theme="snow"
-              value={notepad}
-              onChange={setNotepad}
-            />
-          </div>
-        ) : (
-          ""
-        )}
-
       </div>
 
       <div className="btn-group-wrap">
-      {user_type === "doctor" ? (<button type="button"><FontAwesomeIcon icon={faCommentDots} /></button>):''}
           <button type="button" onClick={()=>{!muted?muteAudio():playAudio()}}>
             {!muted?<FontAwesomeIcon icon={faMicrophone} />:<FontAwesomeIcon icon={faMicrophoneSlash} />}
           </button>
