@@ -20,9 +20,6 @@ const App = () => {
   };
   const params = window.location.search.split('room_name=')[1];
   console.log('room name', params);
-  console.log('url',  "https://teleconsultation.niraginfotech.info/doctor/create_video_room?room_name=" +
-  params);
-  // const [notepad, setNotepad] = useState("");
   const [globalRoom, setGlobalRoom] = useState();
   const [muted, setMuted] = useState(false);
   const [quitVideo, setQuitVideo] = useState(false);
@@ -60,24 +57,24 @@ const App = () => {
     // hide the join form
     document.getElementById("room-name-form").style.display = "flex";
     
-    // var myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
-    // myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4NTQwMzE1LCJpYXQiOjE2OTg0NTM5MTUsImp0aSI6IjYyNTVkOGU3NzA5ZjQxZTlhZDBjMDk2YWFhYzNjZTRjIiwidXNlcl9pZCI6MX0.whJFtOQeOCJoVL_mKXZAT-F4aZuglYj-TVNALAG4y7c");
-    
-    // var requestOptions = {
-    //   method: "GET",
-    //   headers: myHeaders,
-    //   redirect: "follow",
-    // };
-    // const responsePromise =await fetch("https://teleconsultation.niraginfotech.info/doctor/create_video_room?room_name=" +
-    // params, requestOptions);
-    // const response = await responsePromise.text();
-    // console.log('response', JSON.parse(response));
-    // const { token, room_name } = JSON.parse(response);
-    // join the video room with the token
     try {
-    const token = 'eyJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIiwidHlwIjoiSldUIn0.eyJqdGkiOiJTS2Q0YTUzZjg5MTE0ZWVlOWU4ZWJkZDI2MjAwZDAyYmRlLTE2OTg4NTMxMjQiLCJncmFudHMiOnsidmlkZW8iOnsicm9vbSI6IjgzZTI2MjIwMDc4ZCJ9LCJpZGVudGl0eSI6IjM2NzU5OTc1LTQwMjItNGI0MS1hOTk2LWRiNTVlMjllNWUwYyJ9LCJpc3MiOiJTS2Q0YTUzZjg5MTE0ZWVlOWU4ZWJkZDI2MjAwZDAyYmRlIiwiZXhwIjoxNjk5NTQ0MzI0LCJuYmYiOjE2OTg4NTM1MDAsInN1YiI6IkFDOWMwMGI1NjIzMjA2NzQyMDdmN2FmZWQ4NGQ5YzNkN2IifQ.9NMmHFnrJcfpMjzw_W5VH4bJiZl-_PoMOJwhapOep1U';
-    const room_name = '83e26220078d';
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTg3ODA2LCJpYXQiOjE2OTg5MDE0MDYsImp0aSI6ImY3YzUwMDgxNDhiMTQzMTM5YWVhMmU0MDI3MGUzOWUyIiwidXNlcl9pZCI6MX0.Tss9UDRtc9JHEYQzf9QtqLoWYtRXPy4xObfiT7NRgEY");
+    
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    const responsePromise =await fetch("https://teleconsultation.niraginfotech.info/doctor/create_video_room?room_name=" +
+    params, requestOptions);
+    const response = await responsePromise.text();
+    console.log('response', JSON.parse(response));
+    const { token, room_name } = JSON.parse(response);
+    // join the video room with the token
+    // const token = 'eyJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIiwidHlwIjoiSldUIn0.eyJqdGkiOiJTS2Q0YTUzZjg5MTE0ZWVlOWU4ZWJkZDI2MjAwZDAyYmRlLTE2OTg4NTMxMjQiLCJncmFudHMiOnsidmlkZW8iOnsicm9vbSI6IjgzZTI2MjIwMDc4ZCJ9LCJpZGVudGl0eSI6IjM2NzU5OTc1LTQwMjItNGI0MS1hOTk2LWRiNTVlMjllNWUwYyJ9LCJpc3MiOiJTS2Q0YTUzZjg5MTE0ZWVlOWU4ZWJkZDI2MjAwZDAyYmRlIiwiZXhwIjoxNjk5NTQ0MzI0LCJuYmYiOjE2OTg4NTM1MDAsInN1YiI6IkFDOWMwMGI1NjIzMjA2NzQyMDdmN2FmZWQ4NGQ5YzNkN2IifQ.9NMmHFnrJcfpMjzw_W5VH4bJiZl-_PoMOJwhapOep1U';
+    // const room_name = '83e26220078d';
     const room = await joinVideoRoom(room_name, token);
     setGlobalRoom(room);
     handleConnectedParticipant(room.localParticipant);
@@ -86,6 +83,15 @@ const App = () => {
 
     // handle cleanup when a participant disconnects
     room.on("participantDisconnected", handleDisconnectedParticipant);
+    const theDate = new Date().getTime();
+    let updatedDate = theDate;
+    setInterval(() => {
+      if(updatedDate > theDate +15*60000){
+        room.disconnect();
+      } else {
+        updatedDate = updatedDate +1*60000;
+      }
+    }, 60000);
     window.addEventListener("pagehide", () => room.disconnect());
     window.addEventListener("beforeunload", () => room.disconnect());
     } catch(e) {
