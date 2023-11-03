@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Video from "twilio-video";
 // import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -9,16 +9,55 @@ import { faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons";
 import { faVideo } from "@fortawesome/free-solid-svg-icons";
 import { faVideoSlash } from "@fortawesome/free-solid-svg-icons";
 import { faPhoneSlash } from "@fortawesome/free-solid-svg-icons";
-// import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
 const App = () => {
+  let passcode='';
+  const [authenticated, setAuthenticated] = useState(false);
+  const [meetingDate, setMeetingDate] = useState(null);
+  const params = window.location.search.split('room_name=')[1];
+  useEffect(()=>{
+  if (passcode.length < 1) {
+  passcode = prompt('enter passcode');
+  }
+  },[]);
+
+  useEffect(() => {
+    if(passcode.length > 2 && !authenticated) {
+      var myHeaders2 = new Headers();
+      myHeaders2.append("Authorization", "Token QzECldEQkWZDHTzGa4V7uhCqshJRRHmcQlgWWvXkBkqMG");
+      myHeaders2.append("Content-Type", "application/json");
+
+      var raw2 = JSON.stringify({
+        "room_name": params,
+        "pass_code": passcode
+      });
+
+      var requestOptions2 = {
+        method: 'POST',
+        headers: myHeaders2,
+        body: raw2,
+        redirect: 'follow'
+      };
+
+      fetch("https://teleconsultation.niraginfotech.info/doctor/user_verification", requestOptions2)
+        .then(response => response.text())
+        .then((result) => {
+          console.log('result', result)
+          if (JSON.parse(result).status) {
+            setAuthenticated(true);
+            setMeetingDate(result.data.schedule_date);
+          }
+        })
+        .catch(error => console.log('error', error));
+    }
+  },[passcode])
+
   const styles = {
     video: {
       display: "flex",
       flexWrap: "wrap",
     },
   };
-  const params = window.location.search.split('room_name=')[1];
   console.log('room name', params);
   const [globalRoom, setGlobalRoom] = useState();
   const [muted, setMuted] = useState(false);
@@ -83,7 +122,7 @@ const App = () => {
 
     // handle cleanup when a participant disconnects
     room.on("participantDisconnected", handleDisconnectedParticipant);
-    const theDate = new Date().getTime();
+    const theDate = new Date(meetingDate).getTime();
     let updatedDate = theDate;
     setInterval(() => {
       if(updatedDate > theDate +15*60000){
@@ -151,7 +190,9 @@ const App = () => {
   };
 
   return (
-    <div>
+    <>
+    {authenticated?
+    (<div>
       <form id="room-name-form">
         <button
           type="submit"
@@ -191,6 +232,8 @@ const App = () => {
           </button>
       </div>
     </div>
+  ):(<></>)}
+    </>
   );
 };
 
