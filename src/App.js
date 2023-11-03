@@ -9,6 +9,8 @@ import { faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons";
 import { faVideo } from "@fortawesome/free-solid-svg-icons";
 import { faVideoSlash } from "@fortawesome/free-solid-svg-icons";
 import { faPhoneSlash } from "@fortawesome/free-solid-svg-icons";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
 
 const App = () => {
   let passcode='';
@@ -190,50 +192,51 @@ const App = () => {
   };
 
   return (
-    <>
+    <div>
     {authenticated?
-    (<div>
+    (<div id="test" style={{"textAlign":"center"}}>
       <form id="room-name-form">
-        <button
+        <Button
+          variant="primary"
+          style={{position:"absolute",top:"50%"}}
           type="submit"
           onClick={(e) => {
             startRoom(e);
+            e.currentTarget.style.display="none";
           }}
-          color="primary"
-          variant="contained"
         >
           Join Room
-        </button>
+        </Button>
       </form>
       <div className="videoSection">
         <div id="video-container" className="video-outer" style={styles.video}></div>
 
       </div>
-
-      <div className="btn-group-wrap">
-          <button type="button" onClick={()=>{!muted?muteAudio():playAudio()}}>
+      {globalRoom?
+      (<div className="btn-group-wrap">
+          <Button  variant="outline-primary" onClick={()=>{!muted?muteAudio():playAudio()}}>
             {!muted?<FontAwesomeIcon icon={faMicrophone} />:<FontAwesomeIcon icon={faMicrophoneSlash} />}
-          </button>
+          </Button>
 
-          <button type="button" onClick={()=>{!quitVideo?stopVideo():startVideo()}}>
+          <Button  variant="outline-primary" onClick={()=>{!quitVideo?stopVideo():startVideo()}}>
             {!quitVideo?<FontAwesomeIcon icon={faVideo} />:<FontAwesomeIcon icon={faVideoSlash} />}
-          </button>
+          </Button>
 
-          <button
+          <Button
             type="submit"
+            variant="outline-danger"
             className="red"
             onClick={() => {
               sendData();
             }}
             color="error"
-            variant="contained"
           >
             <FontAwesomeIcon icon={faPhoneSlash} />
-          </button>
-      </div>
+          </Button>
+      </div>):''}
     </div>
   ):(<></>)}
-    </>
+    </div>
   );
 };
 
