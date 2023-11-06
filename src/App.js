@@ -46,6 +46,11 @@ const App = () => {
         .then((result) => {
           console.log('result', result)
           if (JSON.parse(result).status) {
+            if((new Date(result.data.schedule_date).getTime()>= new Date().getTime()) && (new Date(result.data.schedule_date).getTime+15*60000<= new Date().getTime()))
+            {
+              alert('This appointment has not started');
+              return;
+            }
             setAuthenticated(true);
             setMeetingDate(result.data.schedule_date);
           }
