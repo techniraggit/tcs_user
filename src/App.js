@@ -46,13 +46,21 @@ const App = () => {
         .then((result) => {
           console.log('result', result)
           if (JSON.parse(result).status) {
-            if((new Date(result.data.schedule_date).getTime()>= new Date().getTime()) && (new Date(result.data.schedule_date).getTime+15*60000<= new Date().getTime()))
+            console.log("data", new Date(JSON.parse(result).data.schedule_date).getTime());
+            console.log("now", new Date().getTime());
+            console.log("15", new Date(JSON.parse(result).data.schedule_date).getTime()+15*60000);
+            if(!((new Date(JSON.parse(result).data.schedule_date).getTime()<= new Date().getTime()) && (new Date(JSON.parse(result).data.schedule_date).getTime()+15*60000 >= new Date().getTime())))
             {
               alert('This appointment has not started');
               return;
             }
             setAuthenticated(true);
-            setMeetingDate(result.data.schedule_date);
+            setMeetingDate(JSON.parse(result).data.schedule_date);
+          }
+          else
+          {
+            alert('This appointment has ended');
+              return;
           }
         })
         .catch(error => console.log('error', error));
