@@ -41,7 +41,7 @@ const App = () => {
         redirect: 'follow'
       };
 
-      fetch("https://teleconsultation.niraginfotech.info/doctor/user_verification", requestOptions2)
+      fetch("https://teleconsultation.niraginfotech.info/user/user_verification", requestOptions2)
         .then(response => response.text())
         .then((result) => {
           console.log('result', result)
