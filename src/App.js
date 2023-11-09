@@ -79,6 +79,7 @@ const App = () => {
   const [quitVideo, setQuitVideo] = useState(false);
   const sendData = async () => {
     globalRoom.disconnect();
+    window.close();
   };
   const muteAudio = () => {
     console.log(globalRoom.localParticipant.audioTracks);
