@@ -1,0 +1,9 @@
+div#video-container div {
+    width: 50%;
+}
+
+div#video-container div video {
+    width: 100%;
+    object-fit: contain;
+    height: 50vh;
+}

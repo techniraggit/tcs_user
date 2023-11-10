@@ -11,6 +11,7 @@ import { faVideoSlash } from "@fortawesome/free-solid-svg-icons";
 import { faPhoneSlash } from "@fortawesome/free-solid-svg-icons";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
+import './meeting.css';
 
 const App = () => {
   let passcode='';
@@ -127,9 +128,6 @@ const App = () => {
     const response = await responsePromise.text();
     console.log('response', JSON.parse(response));
     const { token, room_name } = JSON.parse(response);
-    // join the video room with the token
-    // const token = 'eyJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIiwidHlwIjoiSldUIn0.eyJqdGkiOiJTS2Q0YTUzZjg5MTE0ZWVlOWU4ZWJkZDI2MjAwZDAyYmRlLTE2OTg4NTMxMjQiLCJncmFudHMiOnsidmlkZW8iOnsicm9vbSI6IjgzZTI2MjIwMDc4ZCJ9LCJpZGVudGl0eSI6IjM2NzU5OTc1LTQwMjItNGI0MS1hOTk2LWRiNTVlMjllNWUwYyJ9LCJpc3MiOiJTS2Q0YTUzZjg5MTE0ZWVlOWU4ZWJkZDI2MjAwZDAyYmRlIiwiZXhwIjoxNjk5NTQ0MzI0LCJuYmYiOjE2OTg4NTM1MDAsInN1YiI6IkFDOWMwMGI1NjIzMjA2NzQyMDdmN2FmZWQ4NGQ5YzNkN2IifQ.9NMmHFnrJcfpMjzw_W5VH4bJiZl-_PoMOJwhapOep1U';
-    // const room_name = '83e26220078d';
     const room = await joinVideoRoom(room_name, token);
     setGlobalRoom(room);
     handleConnectedParticipant(room.localParticipant);
