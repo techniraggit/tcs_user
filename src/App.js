@@ -145,6 +145,21 @@ const App = () => {
         updatedDate = updatedDate +1*60000;
       }
     }, 60000);
+    setTimeout(()=>{
+      let myHeaders3 = new Headers();
+      myHeaders3.append("Authorization", "Token QzECldEQkWZDHTzGa4V7uhCqshJRRHmcQlgWWvXkBkqMG");
+
+      let requestOptions3 = {
+        method: 'GET',
+        headers: myHeaders3,
+        redirect: 'follow'
+      };
+
+      fetch("https://teleconsultation.niraginfotech.info/user/validate_call_user?room_name="+globalRoom, requestOptions3)
+        .then(response => response.text())
+        .then((result) => {console.log(result);})
+        .catch(error => console.log('error', error));
+    },60000);
     window.addEventListener("pagehide", () => room.disconnect());
     window.addEventListener("beforeunload", () => room.disconnect());
     } catch(e) {
