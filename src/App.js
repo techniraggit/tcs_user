@@ -47,9 +47,9 @@ const App = () => {
         .then((result) => {
           console.log('result', result)
           if (JSON.parse(result).status) {
-            console.log("data", new Date(JSON.parse(result).data.schedule_date).getTime());
-            console.log("now", new Date().getTime());
-            console.log("15", new Date(JSON.parse(result).data.schedule_date).getTime()+15*60000);
+            // console.log("data", new Date(JSON.parse(result).data.schedule_date).getTime());
+            // console.log("now", new Date().getTime());
+            // console.log("15", new Date(JSON.parse(result).data.schedule_date).getTime()+15*60000);
             if(!((new Date(JSON.parse(result).data.schedule_date).getTime()<= new Date().getTime()) && (new Date(JSON.parse(result).data.schedule_date).getTime()+15*60000 >= new Date().getTime())))
             {
               alert('This appointment has not started');
@@ -155,7 +155,7 @@ const App = () => {
         redirect: 'follow'
       };
 
-      fetch("https://teleconsultation.niraginfotech.info/user/validate_call_user?room_name="+globalRoom, requestOptions3)
+      fetch("https://teleconsultation.niraginfotech.info/user/validate_call_user?room_name="+params, requestOptions3)
         .then(response => response.text())
         .then((result) => {console.log(result);})
         .catch(error => console.log('error', error));
