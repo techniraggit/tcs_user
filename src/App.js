@@ -155,7 +155,7 @@ const App = () => {
         redirect: 'follow'
       };
 
-      fetch("https://teleconsultation.niraginfotech.info/user/validate_call_user?room_name="+globalRoom, requestOptions3)
+      fetch("https://teleconsultation.niraginfotech.info/user/validate_call_user?room_name="+params, requestOptions3)
         .then(response => response.text())
         .then((result) => {console.log(result);})
         .catch(error => console.log('error', error));
