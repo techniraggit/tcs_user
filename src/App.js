@@ -25,6 +25,9 @@ const App = () => {
   },[]);
 
   useEffect(() => {
+    if(passcode === null) {
+    window.close();
+    }
     if(passcode.length > 2 && !authenticated) {
       var myHeaders2 = new Headers();
       myHeaders2.append("Authorization", "Token QzECldEQkWZDHTzGa4V7uhCqshJRRHmcQlgWWvXkBkqMG");
