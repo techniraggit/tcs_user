@@ -19,16 +19,18 @@ const App = () => {
   const [meetingDate, setMeetingDate] = useState(null);
   const params = window.location.search.split('room_name=')[1];
   useEffect(()=>{
-  if (passcode.length < 1) {
-  passcode = prompt('enter passcode');
+  if (passcode != null) {
+    if(passcode.length <1) {
+      passcode = prompt('enter passcode');
+    }
   }
   },[]);
 
   useEffect(() => {
     if(passcode === null) {
-    window.close();
+      alert('Patient not autheticated to connect to the appoitnment. You may close the browser.')
     }
-    if(passcode.length > 2 && !authenticated) {
+    else if(passcode.length > 2 && !authenticated) {
       var myHeaders2 = new Headers();
       myHeaders2.append("Authorization", "Token QzECldEQkWZDHTzGa4V7uhCqshJRRHmcQlgWWvXkBkqMG");
       myHeaders2.append("Content-Type", "application/json");
