@@ -14,6 +14,9 @@ import Button from 'react-bootstrap/Button';
 import './meeting.css';
 
 const App = () => {
+
+
+  let baseURL= process.env.REACT_APP_API_URL
   let passcode='';
   const [authenticated, setAuthenticated] = useState(false);
   const [meetingDate, setMeetingDate] = useState(null);
@@ -47,7 +50,7 @@ const App = () => {
         redirect: 'follow'
       };
 
-      fetch("https://teleconsultation.niraginfotech.info/user/user_verification", requestOptions2)
+      fetch(`${baseURL}/user/user_verification`, requestOptions2)
         .then(response => response.text())
         .then((result) => {
           console.log('result', result)
@@ -128,7 +131,7 @@ const App = () => {
       headers: myHeaders,
       redirect: "follow",
     };
-    const responsePromise =await fetch("https://teleconsultation.niraginfotech.info/doctor/create_video_room?room_name=" +
+    const responsePromise =await fetch(`${baseURL}/doctor/create_video_room?room_name=` +
     params, requestOptions);
     const response = await responsePromise.text();
     console.log('response', JSON.parse(response));
@@ -160,7 +163,7 @@ const App = () => {
         redirect: 'follow'
       };
 
-      fetch("https://teleconsultation.niraginfotech.info/user/validate_call_user?room_name="+params, requestOptions3)
+      fetch(`${baseURL}/user/validate_call_user?room_name=`+params, requestOptions3)
         .then(response => response.text())
         .then((result) => {console.log(result);})
         .catch(error => console.log('error', error));
